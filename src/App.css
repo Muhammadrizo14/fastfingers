@@ -1,3 +1,8 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
 .title {
   text-align: center;
 }
@@ -17,7 +22,7 @@
 }
 
 .repeat {
-  width: 45px;
+  width: 36px;
 }
 
 .text {
@@ -55,4 +60,18 @@
 
 .cur {
   background-color: #33333352;
+}
+
+
+.wordtype {
+  max-height: 18px;
+}
+
+.timer {
+  background-color: rgba(66, 150, 228, 0.37);
+  height: 37px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
