@@ -6,8 +6,9 @@ function App() {
   const [typeInput, setTypeInput] = useState('')
   const [words, setWords] = useState<string[]>([])
   const [counter, setCounter] = useState(0)
-  const [modal, setModal] = useState(true)
+  const [modal, setModal] = useState(false)
   const [wpm, setWpm] = useState(0)
+  const [passedWords, setPassedWords] = useState(0)
 
   // time
   const [time, setTime] = useState(0);
@@ -21,8 +22,8 @@ function App() {
       clearInterval(timerRef.current);
     } else {
       timerRef.current = setInterval(() => {
-        setTime((prevTime) => prevTime + 10); // Update every 10 milliseconds
-      }, 10);
+        setTime((prevTime) => prevTime + 1); // Update every 10 milliseconds
+      }, 1);
     }
     setIsRunning(!isRunning);
   };
@@ -31,7 +32,15 @@ function App() {
     clearInterval(timerRef.current);
     setTime(0);
     setIsRunning(false);
+    setCounter(0)
+    setPassedWords(0)
   };
+
+
+  const tryAgain = () => {
+    setModal(false)
+    getAllWords()
+  }
 
   const formatTime = (milliseconds: any) => {
     const minutes = Math.floor((milliseconds % (60 * 60 * 1000)) / (60 * 1000));
@@ -46,7 +55,7 @@ function App() {
 
   const getAllWords = () => {
     axios
-      .get('https://random-word-api.herokuapp.com/word?number=3&length=3')
+      .get('https://random-word-api.herokuapp.com/word?number=6&length=3')
       .then(res => {
         setWords(res.data)
       })
@@ -57,11 +66,14 @@ function App() {
 
 
   const checkInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('changes');
+
     setTypeInput(e.target.value)
-    startStop()
+    !isRunning && startStop()
 
     if (e.target.value.includes(' ')) {
       if (typeInput === document.querySelector(`.word${counter}`)?.innerHTML) {
+        setPassedWords(prev => prev + 1)
         document.querySelector(`.word${counter}`)?.classList.add('passed')
         document.querySelector(`.word${counter + 1}`)?.classList.add('cur')
         document.querySelector(`.word${counter}`)?.classList.remove('cur')
@@ -80,18 +92,16 @@ function App() {
       setTypeInput('')
 
       if (counter + 1 === words.length) {
-        startStop()
+        reset()
+        setModal(true)
 
-        const minutes = time / (1000 * 60);
-
-
-        console.log(Math.floor(time / 60000));
+        const minutes = time / (10000 * 6);
 
 
-        console.log(`Wpm ${(words.length / minutes).toFixed(2)}`);
+        console.log(`Wpm ${((passedWords / 5) / minutes).toFixed(2)}`);
 
 
-        setWpm(words.length / minutes)
+        setWpm((passedWords / 5) / minutes)
         console.log(`stop`);
       }
     }
@@ -114,8 +124,13 @@ function App() {
       {modal && (
         <div className='popup'>
           <div className='popupContent'>
-            <h1>WPM</h1>
-            <h3>{wpm.toFixed(2)}</h3>
+            <h3>WPM: {wpm.toFixed()}</h3>
+            <h3>Mistakes: {words.length - passedWords}</h3>
+            <h3>Correct: {passedWords}</h3>
+            <button className='tryagain' onClick={() => tryAgain()}>Try Again!</button>
+            <button className='close' onClick={() => setModal(false)}>
+              <svg clipRule="evenodd" fillRule="evenodd" strokeLinejoin="round" strokeMiterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z" /></svg>
+            </button>
           </div>
         </div>
       )}

@@ -1,47 +1,43 @@
+// Stopwatch.tsx
+
 import React, { useState, useRef } from 'react';
 
-const Stopwatch = () => {
-    const [time, setTime] = useState(0);
+const Stopwatch: React.FC = () => {
     const [isRunning, setIsRunning] = useState(false);
-    const timerRef = useRef<any>();
+    const [elapsedTime, setElapsedTime] = useState<number>(0);
+    const intervalRef = useRef<number | null | any>(null);
 
-    const startStop = () => {
-        console.log(time);
+    const startStopwatch = () => {
+        console.log(elapsedTime);
 
-        if (isRunning) {
-            clearInterval(timerRef.current);
-        } else {
-            timerRef.current = setInterval(() => {
-                setTime((prevTime) => prevTime + 10); // Update every 10 milliseconds
+        if (!isRunning) {
+            const startTime = Date.now() - elapsedTime;
+            intervalRef.current = setInterval(() => {
+                setElapsedTime(Date.now() - startTime);
             }, 10);
+        } else {
+            clearInterval(intervalRef.current!);
         }
         setIsRunning(!isRunning);
     };
 
-    const reset = () => {
-        clearInterval(timerRef.current);
-        setTime(0);
+    const resetStopwatch = () => {
+        clearInterval(intervalRef.current!);
         setIsRunning(false);
+        setElapsedTime(0);
     };
 
-    const formatTime = (milliseconds: any) => {
-        const hours = Math.floor(milliseconds / (60 * 60 * 1000));
-        const minutes = Math.floor((milliseconds % (60 * 60 * 1000)) / (60 * 1000));
-        const seconds = Math.floor((milliseconds % (60 * 1000)) / 1000);
-        const ms = milliseconds % 1000;
-
-        const pad = (value: any) => (value < 10 ? `0${value}` : value);
-
-        return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}.${pad(ms)}`;
+    const formatTime = (time: number): string => {
+        const minutes = Math.floor(time / 60000);
+        const seconds = ((time % 60000) / 1000).toFixed(2);
+        return `${minutes}:${(+seconds < 10 ? '0' : '')}${seconds}`;
     };
 
     return (
         <div>
-            <div>
-                <strong>Elapsed Time:</strong> {formatTime(time)}
-            </div>
-            <button onClick={startStop}>{isRunning ? 'Pause' : 'Start'}</button>
-            <button onClick={reset}>Reset</button>
+            <div>{formatTime(elapsedTime)}</div>
+            <button onClick={startStopwatch}>{isRunning ? 'Pause' : 'Start'}</button>
+            <button onClick={resetStopwatch}>Reset</button>
         </div>
     );
 };

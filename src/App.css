@@ -46,7 +46,7 @@
 }
 
 .text p:first-child {
-  background-color: #33333352;
+  background-color: rgb(155, 155, 155);
 }
 
 .err {
@@ -59,7 +59,7 @@
 
 
 .cur {
-  background-color: #33333352;
+  background-color: rgb(155, 155, 155);
 }
 
 
@@ -74,4 +74,51 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+
+.popup {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #0000004f;
+  top: 0;
+}
+
+
+.popupContent {
+  background-color: #fff;
+  color: #000;
+  width: 600px;
+  height: fit-content;
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  padding: 20px;
+}
+
+.tryagain {
+  background-color: #000;
+  color: #fff;
+  border: 0px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+.close {
+  border: 0;
+  background: transparent;
+  border: 0;
+  background: transparent;
+  color: #000;
+  position: absolute;
+  top: 0px;
+  right: 3px;
+  cursor: pointer;
+  width: 45px;
 }
