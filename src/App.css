@@ -43,10 +43,6 @@
   border-radius: 4px;
 }
 
-.text p:first-child {
-  background-color: rgb(155, 155, 155);
-}
-
 .err {
   background-color: rgba(255, 0, 0, 0.301) !important;
 }

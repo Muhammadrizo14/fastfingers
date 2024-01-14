@@ -1,45 +1,35 @@
-// Stopwatch.tsx
+import React, { useState } from 'react';
 
-import React, { useState, useRef } from 'react';
+const MyComponent = () => {
+    const [items, setItems] = useState([
+        { id: 1, name: 'Item 1' },
+        { id: 2, name: 'Item 2' },
+        { id: 3, name: 'Item 3' },
+    ]);
 
-const Stopwatch: React.FC = () => {
-    const [isRunning, setIsRunning] = useState(false);
-    const [elapsedTime, setElapsedTime] = useState<number>(0);
-    const intervalRef = useRef<number | null | any>(null);
+    // Function to update the state
+    const updateItem = (itemId: any, newName: any) => {
+        // Create a new array with the updated item
+        const updatedItems = items.map(item =>
+            item.id === itemId ? { ...item, name: newName } : item
+        );
 
-    const startStopwatch = () => {
-        console.log(elapsedTime);
-
-        if (!isRunning) {
-            const startTime = Date.now() - elapsedTime;
-            intervalRef.current = setInterval(() => {
-                setElapsedTime(Date.now() - startTime);
-            }, 10);
-        } else {
-            clearInterval(intervalRef.current!);
-        }
-        setIsRunning(!isRunning);
-    };
-
-    const resetStopwatch = () => {
-        clearInterval(intervalRef.current!);
-        setIsRunning(false);
-        setElapsedTime(0);
-    };
-
-    const formatTime = (time: number): string => {
-        const minutes = Math.floor(time / 60000);
-        const seconds = ((time % 60000) / 1000).toFixed(2);
-        return `${minutes}:${(+seconds < 10 ? '0' : '')}${seconds}`;
+        // Set the new state
+        setItems(updatedItems);
     };
 
     return (
         <div>
-            <div>{formatTime(elapsedTime)}</div>
-            <button onClick={startStopwatch}>{isRunning ? 'Pause' : 'Start'}</button>
-            <button onClick={resetStopwatch}>Reset</button>
+            {items.map(item => (
+                <div key={item.id}>
+                    {item.name}
+                    <button onClick={() => updateItem(item.id, `New ${item.name}`)}>
+                        Update
+                    </button>
+                </div>
+            ))}
         </div>
     );
 };
 
-export default Stopwatch;
+export default MyComponent;
