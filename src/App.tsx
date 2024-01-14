@@ -6,13 +6,12 @@ import Popup from './Components/popup';
 
 function App() {
   const [typeInput, setTypeInput] = useState('')
-  const [words, setWords] = useState<string[]>([])
-  const [counter, setCounter] = useState(0)
+  const [words, setWords] = useState<any[]>([])
+  const [counter, setCounter] = useState(1)
   const [modal, setModal] = useState(false)
   const [settingsModal, setSettingsModal] = useState(false)
   const [wpm, setWpm] = useState(0)
   const [passedWords, setPassedWords] = useState(0)
-  const wordRefs = useRef<any>([]);
   // time
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -20,13 +19,7 @@ function App() {
   const input = useRef<any>()
   const [numberOfWords, setNumberOfWords] = useState(5)
 
-  useEffect(() => {
-    // Добавляем ссылки на элементы в массив wordRefs
-    wordRefs.current = words.map(() => React.createRef());
-  }, [words]);
-
   const start = () => {
-
     if (isRunning) {
       clearInterval(timerRef.current);
     } else {
@@ -61,12 +54,43 @@ function App() {
     return `${pad(minutes)}:${pad(seconds)}.${pad(ms)}`;
   };
 
+  const updateItem = async (itemId: number, status: string) => {
+
+
+    console.log(`came id ${itemId} to ${status}`);
+    ;
+
+    // Create a new array with the updated item
+    const updatedItems = words.map(item => {
+      if (item.id === itemId) {
+        if (words.length !== itemId) {
+          words[itemId].status = 'cur'
+        }
+        return { ...item, status }
+      } else {
+        return item
+      }
+    });
+
+    // Set the new state
+    setWords(updatedItems);
+  };
+
 
   const getAllWords = () => {
     axios
       .get(`https://random-word-api.herokuapp.com/word?number=${numberOfWords}&length=5`)
-      .then(res => {
-        setWords(res.data)
+      .then(async res => {
+        let data = res.data
+        console.log(data);
+        let id = 0;
+        let newWords = data.map((word: string) => {
+          id++
+
+          return word === data[0] ? { id, word, status: 'cur' } : { id, word, status: '' };
+        });
+        setWords(newWords)
+
       })
       .catch(err => {
         console.log(err);
@@ -76,34 +100,33 @@ function App() {
 
 
 
-  const checkInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const checkInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setTypeInput(e.target.value)
     !isRunning && start()
 
 
     if (e.target.value.includes(' ')) {
-      if (typeInput === document.querySelector(`.word${counter}`)?.innerHTML) {
-        setPassedWords(prev => prev + 1)
+      console.log(`must be ${words[counter - 1].word}`);
+      console.log(`typed ${typeInput}`);
+      console.log(`counter ${counter}`);
+
+
+      if (typeInput === words[counter - 1].word) {
+        console.log(`success`);
+
+        await updateItem(counter, 'passed')
+        await setPassedWords(prev => prev + 1)
         setCounter(prev => prev + 1)
-
-
-        document.querySelector(`.word${counter}`)?.classList.add('passed')
-        document.querySelector(`.word${counter + 1}`)?.classList.add('cur')
-        document.querySelector(`.word${counter}`)?.classList.remove('cur')
-
       } else {
-        document.querySelector(`.word${counter}`)?.classList.add('err')
-        document.querySelector(`.word${counter}`)?.classList.remove('cur')
-
-        document.querySelector(`.word${counter + 1}`)?.classList.add('cur')
-
+        console.log(`error`);
+        await updateItem(counter, 'err')
         setCounter(prev => prev + 1)
       }
 
 
       setTypeInput('')
 
-      if (counter + 1 === words.length) {
+      if (counter === words.length) {
         reset()
         setModal(true)
 
@@ -118,7 +141,9 @@ function App() {
   }
 
 
-
+  useEffect(() => {
+    console.log('Updated State:', words);
+  }, [words]);
   useEffect(() => {
     input.current.focus()
     getAllWords()
@@ -146,7 +171,7 @@ function App() {
 
             <input type="number" value={numberOfWords} min={1} onChange={(e: any) => { setNumberOfWords(e.target.value) }} placeholder='Length of words' />
 
-            <button className='close' onClick={() => (setSettingsModal(false), getAllWords( ))}>
+            <button className='close' onClick={() => (setSettingsModal(false), getAllWords())}>
               <svg clipRule="evenodd" fillRule="evenodd" strokeLinejoin="round" strokeMiterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z" /></svg>
             </button>
           </>
@@ -169,11 +194,12 @@ function App() {
 
 
       <div className="text">
-        {words.map((word, index) => (
-          // <p ref={el => (wordsOnParagraph.current.push(el), console.log(1))} key={word}>{word}</p>
-          <p className={`word${index.toString()} wordtype`} key={word}>{word}</p>
+        {words.map(word => (
+          <p className={`${word.status === 'cur' && 'cur'} ${word.status === 'err' && 'err'} ${word.status === 'passed' && 'passed'}`} key={word.id}>{word.word}</p>
         ))}
       </div>
+
+
 
       <div className="type">
         <div className='timer'>
