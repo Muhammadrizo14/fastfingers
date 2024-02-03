@@ -17,7 +17,7 @@ function App() {
   const [isRunning, setIsRunning] = useState(false);
   const timerRef = useRef<number | any>();
   const input = useRef<any>()
-  const [numberOfWords, setNumberOfWords] = useState(2)
+  const [numberOfWords, setNumberOfWords] = useState<number>(2)
 
   const start = () => {
     if (isRunning) {
@@ -74,9 +74,17 @@ function App() {
   };
 
 
+  const changeWord = (e: any)=> {
+    setNumberOfWords(e.target.value)
+    localStorage.setItem('count', e.target.value.toString())
+  }
+
+
   const getAllWords = () => {
+    console.log(localStorage.getItem('count'), typeof localStorage.getItem('count'))
+    console.log(Number(localStorage.getItem('count')), typeof Number(localStorage.getItem('count')))
     axios
-      .get(`https://random-word-api.herokuapp.com/word?number=${numberOfWords}&length=5`)
+      .get(`https://random-word-api.herokuapp.com/word?number=${localStorage.getItem('count')}&length=5`)
       .then(async res => {
         let data = res.data
         console.log(data);
@@ -129,7 +137,13 @@ function App() {
   useEffect(() => {
     input.current.focus()
     getAllWords()
+    if (!localStorage.getItem('count')) {
+      localStorage.setItem('count', '3')
+    } else {
+      setNumberOfWords(Number(localStorage.getItem('count')))
+    }
   }, [])
+
 
 
   return (
@@ -149,7 +163,13 @@ function App() {
           <>
             <h1>Settings</h1>
 
-            <input type="number" value={numberOfWords} min={1} onChange={(e: any) => { setNumberOfWords(e.target.value) }} placeholder='Length of words' />
+            <input
+              type="number"
+              value={numberOfWords}
+              min={1}
+              onChange={(e: any) =>  changeWord(e) }
+              placeholder='Length of words'
+            />
 
             <button className='close' onClick={() => (setSettingsModal(false), getAllWords())}>
               <svg clipRule="evenodd" fillRule="evenodd" strokeLinejoin="round" strokeMiterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z" /></svg>
