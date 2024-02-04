@@ -2,7 +2,7 @@ import React from 'react';
 // Хуки находятся в react-redux
 import { useSelector, useDispatch } from 'react-redux';
 // Импортируем нужные действия
-import { decrement, increment, incrementByAmount } from '../slices/counterSlice.js';
+import { decrement, increment, incrementByAmount } from '../slices/counterSlice';
 
 export default () => {
   // Вытаскиваем данные из хранилища
