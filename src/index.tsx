@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import store from './slices/index.js';
+import {store} from './slices';
 import reportWebVitals from './reportWebVitals';
 import {
   RouterProvider,

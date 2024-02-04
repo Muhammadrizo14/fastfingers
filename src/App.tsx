@@ -3,6 +3,10 @@ import './App.css';
 import { useEffect, useRef, useState } from 'react';
 import React from 'react';
 import Popup from './Components/popup';
+import {getMultipleRandom} from "./helpers/extraText";
+import {useSelector} from "react-redux";
+import {log} from "node:util";
+import {Link} from "react-router-dom";
 
 function App() {
   const [typeInput, setTypeInput] = useState('')
@@ -18,6 +22,9 @@ function App() {
   const timerRef = useRef<number | any>();
   const input = useRef<any>()
   const [numberOfWords, setNumberOfWords] = useState<number>(2)
+  const wordsState = useSelector((state:any) => state.words.value);
+
+
 
   const start = () => {
     if (isRunning) {
@@ -45,7 +52,6 @@ function App() {
     setCounter(1)
     setPassedWords(0)
     input.current.focus()
-
   }
 
   const formatTime = (milliseconds: any) => {
@@ -80,26 +86,45 @@ function App() {
   }
 
 
+  const customWords = ()=> {
+    let id = 0;
+    let newWords = wordsState.map((word: string) => {
+      id++
+
+      return word === wordsState[0] ? { id, word, status: 'cur' } : { id, word, status: '' };
+    });
+    setWords(newWords)
+  }
+
   const getAllWords = () => {
-    console.log(localStorage.getItem('count'), typeof localStorage.getItem('count'))
-    console.log(Number(localStorage.getItem('count')), typeof Number(localStorage.getItem('count')))
-    axios
-      .get(`https://random-word-api.herokuapp.com/word?number=${localStorage.getItem('count')}&length=5`)
-      .then(async res => {
-        let data = res.data
-        console.log(data);
-        let id = 0;
-        let newWords = data.map((word: string) => {
-          id++
+    !wordsState.length ? (
+        axios
+          .get(`https://random-word-api.herokuapp.com/word?number=${localStorage.getItem('count')}&length=5`)
+          .then(async res => {
+            let {data} = res
+            let id = 0;
+            let newWords = data.map((word: string) => {
+              id++
 
-          return word === data[0] ? { id, word, status: 'cur' } : { id, word, status: '' };
-        });
-        setWords(newWords)
+              return word === data[0] ? { id, word, status: 'cur' } : { id, word, status: '' };
+            });
+            setWords(newWords)
 
-      })
-      .catch(err => {
-        console.log(err);
-      })
+          })
+          .catch(err => {
+            const data = getMultipleRandom(Number(localStorage.getItem('count')))
+
+            let id = 0;
+            let newWords = data.map((word: string) => {
+              id++
+
+              return word === data[0] ? { id, word, status: 'cur' } : { id, word, status: '' };
+            });
+            setWords(newWords)
+          })
+    )
+    :customWords()
+
   }
 
 
@@ -125,8 +150,7 @@ function App() {
         reset()
         setModal(true)
 
-        const seconds = time / 1000;
-        const minutes = seconds / 60; // or ms to 60000
+        const minutes = time / 60000; // or ms to 60000
 
         setWpm((passedWords + 1 / 5) / minutes)
       }
@@ -170,6 +194,10 @@ function App() {
               onChange={(e: any) =>  changeWord(e) }
               placeholder='Length of words'
             />
+
+            <br/>
+
+            <Link to={'/custom'}>custom</Link>
 
             <button className='close' onClick={() => (setSettingsModal(false), getAllWords())}>
               <svg clipRule="evenodd" fillRule="evenodd" strokeLinejoin="round" strokeMiterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z" /></svg>
