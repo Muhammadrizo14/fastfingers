@@ -6,6 +6,7 @@ import {getMultipleRandom} from "./helpers/extraText";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {formatTime} from "./helpers/util";
+import Keyboard from './Components/Keyboard'
 
 function App() {
   const [typeInput, setTypeInput] = useState('')
@@ -179,6 +180,11 @@ function App() {
           ref={input}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => checkInput(e)}
         />
+      </div>
+
+
+      <div className='keyboard__wrap'>
+        <Keyboard/>
       </div>
 
       <p className='createdby'>created by <a href="https://t.me/ubuntuous">@ubuntuous</a></p>
