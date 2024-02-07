@@ -1,0 +1,25 @@
+.keyboard {
+    max-width: 800px;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.key {
+    border-radius: 6px;
+    border: 1px solid #333;
+    padding: 10px;
+}
+
+.active {
+    background-color: #51588e;
+}

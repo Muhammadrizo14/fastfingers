@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {changeState} from "../../slices/customWordsSlice";
-import { redirect } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {
