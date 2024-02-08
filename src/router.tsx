@@ -1,6 +1,7 @@
 import {createBrowserRouter} from "react-router-dom";
 import Home from './App'
 import Custom from "./Pages/Custom";
+import Text from "./Pages/Text";
 
 
 const router = createBrowserRouter([
@@ -11,6 +12,10 @@ const router = createBrowserRouter([
   {
     path: "/custom",
     element: <Custom/>,
+  },
+  {
+    path: "/text",
+    element: <Text/>,
   },
 ]);
 
