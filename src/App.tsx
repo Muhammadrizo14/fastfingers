@@ -1,5 +1,5 @@
 import './App.css';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import React from 'react';
 import Popup from './Components/popup';
 import {getMultipleRandom} from "./helpers/extraText";
@@ -13,6 +13,7 @@ function App() {
   const [words, setWords] = useState<any[]>([])
   const [counter, setCounter] = useState(1)
   const [modal, setModal] = useState(false)
+  const [capslock, setCapslock] = useState(false)
   const [settingsModal, setSettingsModal] = useState(false)
   const [wpm, setWpm] = useState(0)
   const [passedWords, setPassedWords] = useState(0)
@@ -103,11 +104,20 @@ function App() {
 
   }
 
+  const handleKeyDown = (event: KeyboardEvent) => {
+    const capsLockState = event.getModifierState('CapsLock');
+    setCapslock(capsLockState);
+  };
 
-  const checkInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useLayoutEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+  const checkInput = (e: any) => {
     setTypeInput(e.target.value)
     !isRunning && start()
-
 
     if (e.target.value.includes(' ')) {
       if (typeInput === words[counter - 1].word) {
@@ -150,7 +160,7 @@ function App() {
   return (
     <div>
       <h1 className='title'>
-        10FastFingers
+        10FastFingers {capslock && <p>CapsLock on</p>}
       </h1>
 
 
@@ -178,7 +188,7 @@ function App() {
           value={typeInput}
           type="text"
           ref={input}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => checkInput(e)}
+          onChange={(e: any) => checkInput(e)}
         />
       </div>
 

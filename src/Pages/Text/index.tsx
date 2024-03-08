@@ -9,6 +9,7 @@ const IndexHtml = () => {
   const [words, setWords] = useState<any[]>([])
   const input = useRef<any>()
   const [changingInput, setChangingInput] = useState<string>('')
+  const [end, setEnd] = useState<boolean>(false)
 
   const customWords = () => {
     let id = 0;
@@ -20,6 +21,7 @@ const IndexHtml = () => {
     setWords(newWords)
   }
   const getAllWords = () => {
+    setEnd(false)
     if (!wordsState.length) {
       let data = getMultipleRandom(Number(localStorage.getItem('count')))
 
@@ -52,30 +54,45 @@ const IndexHtml = () => {
   }
 
   const updateItem = async (itemId: number, status: string) => {
-    const updatedItems = words.map(item => {
-      if (item.id === itemId) {
-        if (words.length !== itemId) {
-          words[itemId].status = 'curletter'
+    if (words[itemId]) {
+      const updatedItems = words.map(item => {
+        if (item.id === itemId) {
+          if (words.length !== itemId) {
+            words[itemId].status = 'curletter'
+          }
+          return {...item, status}
+        } else {
+          return item
         }
-        return {...item, status}
-      } else {
-        return item
-      }
-    });
+      });
+      setWords(updatedItems);
 
-    setWords(updatedItems);
+    }
+
   };
 
   const Typing = (e: any) => {
     let {value} = e.target
     let count = value.length - 1
     setChangingInput(value)
-    if (words[count].word === 'space') {
-      updateItem(count + 1, 'succeed')
-    } else if (words[count].word === value.charAt(value.length - 1)) {
-      updateItem(count + 1, 'succeed')
-    } else {
-      updateItem(count+1, 'fail')
+
+
+
+    if (count + 1 === words.length) {
+      setEnd(true)
+      // end code here
+      setWords([])
+      setChangingInput('')
+      getAllWords()
+    }
+    if (!end) {
+      if (words?.[count]?.word === 'space') {
+          updateItem(count + 1, 'succeed')
+      } else if (words[count].word === value.charAt(value.length - 1)) {
+          updateItem(count + 1, 'succeed')
+      } else {
+        updateItem(count+1, 'fail')
+      }
     }
 
 
