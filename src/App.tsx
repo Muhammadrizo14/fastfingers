@@ -148,13 +148,17 @@ function App() {
       if (counter === words.length) {
         reset()
         setModal(true)
-
-        const minutes = time / 60000; // or ms to 60000
-
-        setWpm((passedWords + 1 / 5) / minutes)
       }
     }
   }
+
+
+  useEffect(() => {
+    console.log(passedWords)
+    const min = time / 60000;
+    console.log(((passedWords / 5) / min))
+    setWpm((passedWords / min))
+  }, [passedWords]);
 
 
   useEffect(() => {
