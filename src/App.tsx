@@ -22,7 +22,7 @@ function App() {
   const [isRunning, setIsRunning] = useState(false);
   const timerRef = useRef<number | any>();
   const input = useRef<any>()
-  const [numberOfWords, setNumberOfWords] = useState<number>(2)
+  const [numberOfWords, setNumberOfWords] = useState<number>(9)
   const wordsState = useSelector((state: any) => state.words.value);
 
 
@@ -39,13 +39,13 @@ function App() {
 
   const reset = () => {
     clearInterval(timerRef.current);
-    setTime(0);
     setIsRunning(false);
     setCounter(0)
   };
 
 
   const tryAgain = () => {
+    setTime(0);
     setWords([])
     setModal(false)
     getAllWords()
@@ -115,9 +115,20 @@ function App() {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
+
+  const validateString = (input: string): void => {
+    words[counter - 1].status = 'cur'
+    for (let i = 0; i < input.length; i++) {
+      if ((words[counter - 1].word[i] !== input[i])) {
+        words[counter - 1].status = 'err'
+      }
+    }
+  }
+
   const checkInput = (e: any) => {
     setTypeInput(e.target.value)
     !isRunning && start()
+    validateString(e.target.value)
 
     if (e.target.value.includes(' ')) {
       if (typeInput === words[counter - 1].word) {
@@ -197,7 +208,7 @@ function App() {
         <Keyboard/>
       </div>
 
-      <p className='createdby'>created by <a href="https://t.me/ubuntuous">@ubuntuous</a></p>
+      <p className='createdby'>created by <a href="https://github.com/Muhammadrizo14">@ubuntuous</a></p>
 
       {settingsModal && (
         <Popup>
@@ -236,6 +247,7 @@ function App() {
             <h3>WPM: {wpm.toFixed()}</h3>
             <h3>Mistakes: {words.length - passedWords}</h3>
             <h3>Correct: {passedWords}</h3>
+            <h3>Time: {formatTime(time)}</h3>
             <button className='tryagain' onClick={() => tryAgain()}>Try Again!</button>
             <button className='close' onClick={() => setModal(false)}>
               <svg clipRule="evenodd" fillRule="evenodd" strokeLinejoin="round" strokeMiterlimit="2" viewBox="0 0 24 24"
