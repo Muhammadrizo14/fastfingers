@@ -154,9 +154,7 @@ function App() {
 
 
   useEffect(() => {
-    console.log(passedWords)
     const min = time / 60000;
-    console.log(((passedWords / 5) / min))
     setWpm((passedWords / min))
   }, [passedWords]);
 
