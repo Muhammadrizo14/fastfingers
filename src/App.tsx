@@ -1,5 +1,5 @@
 import './App.css';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import React from 'react';
 import Popup from './Components/popup';
 import {getMultipleRandom} from "./helpers/extraText";
@@ -13,6 +13,7 @@ function App() {
   const [words, setWords] = useState<any[]>([])
   const [counter, setCounter] = useState(1)
   const [modal, setModal] = useState(false)
+  const [capslock, setCapslock] = useState(false)
   const [settingsModal, setSettingsModal] = useState(false)
   const [wpm, setWpm] = useState(0)
   const [passedWords, setPassedWords] = useState(0)
@@ -21,7 +22,7 @@ function App() {
   const [isRunning, setIsRunning] = useState(false);
   const timerRef = useRef<number | any>();
   const input = useRef<any>()
-  const [numberOfWords, setNumberOfWords] = useState<number>(2)
+  const [numberOfWords, setNumberOfWords] = useState<number>(9)
   const wordsState = useSelector((state: any) => state.words.value);
 
 
@@ -38,13 +39,13 @@ function App() {
 
   const reset = () => {
     clearInterval(timerRef.current);
-    setTime(0);
     setIsRunning(false);
     setCounter(0)
   };
 
 
   const tryAgain = () => {
+    setTime(0);
     setWords([])
     setModal(false)
     getAllWords()
@@ -103,11 +104,31 @@ function App() {
 
   }
 
+  const handleKeyDown = (event: KeyboardEvent) => {
+    const capsLockState = event.getModifierState('CapsLock');
+    setCapslock(capsLockState);
+  };
 
-  const checkInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useLayoutEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  const validateString = (input: string): void => {
+    words[counter - 1].status = 'cur'
+    for (let i = 0; i < input.length; i++) {
+      if ((words[counter - 1].word[i] !== input[i])) {
+        words[counter - 1].status = 'err'
+      }
+    }
+  }
+
+  const checkInput = (e: any) => {
     setTypeInput(e.target.value)
     !isRunning && start()
-
+    validateString(e.target.value)
 
     if (e.target.value.includes(' ')) {
       if (typeInput === words[counter - 1].word) {
@@ -127,13 +148,15 @@ function App() {
       if (counter === words.length) {
         reset()
         setModal(true)
-
-        const minutes = time / 60000; // or ms to 60000
-
-        setWpm((passedWords + 1 / 5) / minutes)
       }
     }
   }
+
+
+  useEffect(() => {
+    const min = time / 60000;
+    setWpm((passedWords / min))
+  }, [passedWords]);
 
 
   useEffect(() => {
@@ -150,7 +173,7 @@ function App() {
   return (
     <div>
       <h1 className='title'>
-        10FastFingers
+        10FastFingers {capslock && <p>CapsLock on</p>}
       </h1>
 
 
@@ -178,7 +201,7 @@ function App() {
           value={typeInput}
           type="text"
           ref={input}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => checkInput(e)}
+          onChange={(e: any) => checkInput(e)}
         />
       </div>
 
@@ -187,7 +210,7 @@ function App() {
         <Keyboard/>
       </div>
 
-      <p className='createdby'>created by <a href="https://t.me/ubuntuous">@ubuntuous</a></p>
+      <p className='createdby'>created by <a href="https://github.com/Muhammadrizo14">@ubuntuous</a></p>
 
       {settingsModal && (
         <Popup>
@@ -226,6 +249,7 @@ function App() {
             <h3>WPM: {wpm.toFixed()}</h3>
             <h3>Mistakes: {words.length - passedWords}</h3>
             <h3>Correct: {passedWords}</h3>
+            <h3>Time: {formatTime(time)}</h3>
             <button className='tryagain' onClick={() => tryAgain()}>Try Again!</button>
             <button className='close' onClick={() => setModal(false)}>
               <svg clipRule="evenodd" fillRule="evenodd" strokeLinejoin="round" strokeMiterlimit="2" viewBox="0 0 24 24"

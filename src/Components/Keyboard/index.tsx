@@ -23,6 +23,8 @@ const Keyboard = () => {
       handleKeyPress(event.key);
     };
 
+
+
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {

@@ -13,7 +13,7 @@ export let ExtraText:string[] = [
   "airport", "banana", "castle", "dragon", "elephant", "feather", "garden", "honey", "island",
   "jungle", "kite", "lemonade", "mango", "nest", "octopus", "puzzle", "quilt", "raincoat",
   "snail", "treasure", "umbrella", "vase", "whale", "x-ray", "yo-yo", "zipline", "anchor",
-  "bicycle", "cactus", "dolphin", "elephant", "firefly", "giraffe", "hammock", "ice cream", "jacket",
+  "bicycle", "cactus", "dolphin", "elephant", "firefly", "giraffe", "hammock", "jacket",
   "lighthouse", "marshmallow", "napkin", "ostrich", "pajamas", "quiver", "raccoon", "seashell", "tiger",
   "umbrella", "vanilla", "wagon", "xylophone", "yogurt", "zipper", "accordion", "balloon", "caterpillar",
   "dinosaur", "elevator", "firetruck", "giraffe", "hamburger", "iceberg", "jungle", "kangaroo", "lighthouse",
