@@ -1,25 +1,35 @@
 .keyboard {
-    max-width: 800px;
-    margin: 30px auto;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+  max-width: 800px;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
 .key {
-    border-radius: 6px;
-    border: 1px solid #333;
-    padding: 10px;
+  border-radius: 6px;
+  padding: 10px;
+  color: rgb(75, 89, 117);
+  background-color: rgb(21, 26, 33);
+  border-color: rgb(75, 89, 117);
 }
 
+.space {
+  width: 100%;
+  max-width: 200px;
+}
+
+
+
 .active {
-    background-color: #51588e;
+  background: var(--main-color);
+  color: var(--sub-alt-color);
+  border-color: rgb(74, 89, 117);
 }
