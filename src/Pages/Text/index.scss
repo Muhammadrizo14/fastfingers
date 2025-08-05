@@ -1,0 +1,163 @@
+.text__wrap {
+  display: flex;
+  align-items: center;
+  height: 600px;
+  position: relative;
+}
+
+.inputTyping {
+  position: absolute;
+  /*height: 600px;*/
+  /*width: 100%;*/
+  border: 0;
+  opacity: 0;
+  outline: none;
+  cursor: default;
+}
+
+.text__container {
+  margin-left: 10px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.letter-wrap {
+  min-width: 15px;
+  text-align: center;
+}
+
+.letter {
+  color: var(--sub-color);
+  pointer-events: none;
+  user-select: none;
+  font-size: 62px;
+}
+
+.succeed {
+  color: var(--text-color);
+}
+
+.fail {
+  color: var(--error-color);
+}
+
+
+.empty {
+  font-size: 34px;
+  pointer-events: none;
+  user-select: none;
+  height: 100%;
+  color: var(--error-color);
+  width: 15px;
+  &::before {
+    top: calc(100% + 2px);
+    display: none;
+  }
+}
+
+
+
+.current-letter {
+  position: relative;
+
+  &::before {
+    content: '';
+    height: 4px;
+    width: 100%;
+    background-color: var(--sub-color);
+    left: -1px;
+    bottom: 0;
+
+    transition: .2s;
+    animation-fill-mode: forwards;
+    position: absolute;
+
+    animation: caretFlashSmooth 0.6s infinite;
+    border-radius: .5rem;
+  }
+}
+
+.gone::before {
+  left: calc(100% - 1px);    width: 100%;
+
+
+}
+
+
+@keyframes caretFlashSmooth {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.game__wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.restart {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+
+  outline: none;
+
+  &:hover {
+    svg {
+      fill: var(--text-color);
+    }
+  }
+
+  &:focus-visible {
+    padding: 10px;
+    width: fit-content;
+    margin: 0 auto;
+    border-radius: 30px;
+    border: 1px solid var(--main-color);
+  }
+
+  svg {
+    fill: var(--sub-color);
+  }
+
+}
+
+.not-focused {
+  opacity: .25;
+  filter: blur(4px);
+  -webkit-filter: blur(4px);
+}
+
+.not-focused-info {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  color: var(--text-color);
+  gap: 10px;
+  user-select: none;
+  cursor: pointer;
+  svg {
+    width: 22px;
+    fill: var(--text-color);
+  }
+}
+
+
+.results {
+  ul {
+    li {
+      list-style: none;
+      color: var(--sub-color);
+      font-size: 40px;
+      span {
+        color: var(--main-color);
+      }
+    }
+  }
+}

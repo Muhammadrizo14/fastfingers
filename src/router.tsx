@@ -5,16 +5,16 @@ import Text from "./Pages/Text";
 
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home/>,
-  },
+  // {
+  //   path: "/",
+  //   element: <Home/>,
+  // },
   {
     path: "/custom",
     element: <Custom/>,
   },
   {
-    path: "/text",
+    path: "/",
     element: <Text/>,
   },
 ]);

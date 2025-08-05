@@ -7,6 +7,7 @@ const Keyboard = () => {
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
     ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
     ['z', 'x', 'c', 'v', 'b', 'n', 'm'],
+    [' ']
   ];
 
   const [pressedKey, setPressedKey] = useState(null);
@@ -38,7 +39,7 @@ const Keyboard = () => {
         <div className='row' key={rowIndex}>
           {row.map((key, keyIndex) => (
             <div
-              className={`key ${pressedKey === key ? 'active' : ''}`}
+              className={`key ${pressedKey === key ? 'active' : ''} ${key === ' ' ? 'space' : ''}`}
               key={keyIndex}
             >
               {key}

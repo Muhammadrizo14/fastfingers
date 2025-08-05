@@ -2,7 +2,7 @@ import './App.css';
 import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import React from 'react';
 import Popup from './Components/popup';
-import {getMultipleRandom} from "./helpers/extraText";
+import {getMultipleRandom} from "./helpers/generate-words";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {formatTime} from "./helpers/util";
@@ -154,8 +154,8 @@ function App() {
 
 
   useEffect(() => {
-    const min = time / 60000;
-    setWpm((passedWords / min))
+    const min = time / 60;
+    setWpm((passedWords / min) / 50)
   }, [passedWords]);
 
 
@@ -172,7 +172,7 @@ function App() {
 
   return (
     <div>
-      <h1 className='title'>
+      <h1 className='title' style={{color: capslock ? '#000' : '#fff'}}>
         10FastFingers {capslock && <p>CapsLock on</p>}
       </h1>
 
