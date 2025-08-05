@@ -172,7 +172,7 @@ function App() {
 
   return (
     <div>
-      <h1 className='title'>
+      <h1 className='title' style={{color: capslock ? '#000' : '#fff'}}>
         10FastFingers {capslock && <p>CapsLock on</p>}
       </h1>
 

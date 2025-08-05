@@ -3,12 +3,12 @@ interface IWpm {
   time: number, // time in seconds
 }
 
-
 const CalculateWpm = (words: number, time: number) => {
   const minutes = time / 60
-
-  const wpm = ((words / minutes) / 5).toFixed()
-
+  
+  // WPM = (words / minutes) - standard WPM calculation
+  const wpm = Math.round((words / minutes))
+  
   return wpm
 }
 

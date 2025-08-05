@@ -24,9 +24,7 @@
 }
 
 .letter-wrap {
-  display: inline-block;
-  min-width: 6px;
-  min-height: 23px;
+  min-width: 15px;
   text-align: center;
 }
 
@@ -34,6 +32,7 @@
   color: var(--sub-color);
   pointer-events: none;
   user-select: none;
+  font-size: 62px;
 }
 
 .succeed {
@@ -46,9 +45,15 @@
 
 
 .empty {
+  font-size: 34px;
+  pointer-events: none;
+  user-select: none;
   height: 100%;
+  color: var(--error-color);
+  width: 15px;
   &::before {
-    top: 16px;
+    top: calc(100% + 2px);
+    display: none;
   }
 }
 
@@ -59,8 +64,8 @@
 
   &::before {
     content: '';
-    height: 2px;
-    width: 10px;
+    height: 4px;
+    width: 100%;
     background-color: var(--sub-color);
     left: -1px;
     bottom: 0;
@@ -75,9 +80,10 @@
 }
 
 .gone::before {
-  left: calc(100% - 1px);
-}
+  left: calc(100% - 1px);    width: 100%;
 
+
+}
 
 
 @keyframes caretFlashSmooth {
@@ -87,6 +93,12 @@
   50% {
     opacity: 1;
   }
+}
+
+.game__wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .restart {
@@ -100,6 +112,14 @@
     svg {
       fill: var(--text-color);
     }
+  }
+
+  &:focus-visible {
+    padding: 10px;
+    width: fit-content;
+    margin: 0 auto;
+    border-radius: 30px;
+    border: 1px solid var(--main-color);
   }
 
   svg {
@@ -125,5 +145,19 @@
   svg {
     width: 22px;
     fill: var(--text-color);
+  }
+}
+
+
+.results {
+  ul {
+    li {
+      list-style: none;
+      color: var(--sub-color);
+      font-size: 40px;
+      span {
+        color: var(--main-color);
+      }
+    }
   }
 }

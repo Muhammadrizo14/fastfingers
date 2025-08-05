@@ -31,11 +31,12 @@ const Time: React.FC<IProp> = ({ start, setPlayedTime }) => {
       if (timeout.current) clearInterval(timeout.current); // Cleanup interval on unmount
     };
   }, [start, setPlayedTime]);
+
   return (
     <div>
       {time ? <p style={{color: `var(--text-color)`}}>{time}</p> : null}
     </div>
-  )
-}
+  );
+};
 
-export default Time
+export default React.memo(Time);
