@@ -1,25 +1,34 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-
-
-interface CountState {
+/**
+ * Интерфейс состояния пользовательских слов
+ */
+interface CustomWordsState {
+  /** Массив пользовательских слов */
   value: string[]
 }
 
-const initialState: CountState = {
+
+const initialState: CustomWordsState = {
   value: [],
 };
+
 
 const customWordsSlice = createSlice({
   name: 'words',
   initialState,
   reducers: {
+    /**
+     * Редьюсер для изменения массива пользовательских слов
+     */
     changeState: (state, action: PayloadAction<string[]>) => {
       state.value = action.payload;
     },
   },
 });
 
+
 export const { changeState } = customWordsSlice.actions;
+
 
 export default customWordsSlice.reducer;
