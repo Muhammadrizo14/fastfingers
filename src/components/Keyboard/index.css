@@ -1,0 +1,56 @@
+.keyboard {
+  max-width: 800px;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.key {
+  border-radius: 6px;
+  padding: 20px 30px;
+  font-size: 24px;
+}
+
+/* Dark theme (default) */
+.keyboard.dark .key {
+  color: rgb(75, 89, 117);
+  background-color: rgb(21, 26, 33);
+  border-color: rgb(75, 89, 117);
+}
+
+/* Light theme */
+.keyboard.light .key {
+  color: rgb(50, 60, 80);
+  background-color: rgb(214, 214, 220);
+  border-color: rgb(180, 190, 210);
+}
+
+.space {
+  width: 100%;
+  max-width: 500px;
+  padding: 30px 0;
+}
+
+
+
+/* Active state for dark theme */
+.keyboard.dark .active {
+  background: var(--main-color, #4a71b2);
+  color: var(--sub-alt-color, #ffffff);
+  border-color: rgb(74, 89, 117);
+}
+
+/* Active state for light theme */
+.keyboard.light .active {
+  background: #3a8eff;
+  color: #ffffff;
+  border-color: #2a6dbd;
+}
