@@ -26,6 +26,7 @@
 ```bash
 git clone https://github.com/Muhammadrizo14/fastfingers.git
 cd fastfingers
+```
 
 ## Доступные скрипты
 
