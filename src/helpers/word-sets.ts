@@ -1,11 +1,44 @@
-// Общеупотребительные русские слова
-export const commonWords: string[] = ["и", "в", "не", "на", "я", "что", "тот", "быть", "с", "а", "весь", "это", "как", "она", "по", "но", "они", "к", "у", "ты", "из", "мы", "за", "вы", "так", "же", "от", "сказать", "этот", "который", "мочь", "человек", "о", "один", "еще", "бы", "такой", "только", "себя", "свой", "какой", "когда", "уже", "для", "вот", "кто", "да", "говорить", "год", "знать", "мой", "до", "или", "если", "время", "рука", "нет", "самый", "ни", "стать", "большой", "даже", "другой", "наш", "свое", "под", "где", "дело", "есть", "сам", "раз", "чтобы", "два", "там", "чем", "глаз", "жизнь", "первый", "день", "тут", "во", "ничто", "потом", "очень", "со", "хотеть", "ли", "при", "голова", "надо", "без", "видеть", "идти", "теперь", "тоже", "стоять", "друг", "дом", "сейчас", "можно", "после", "слово", "здесь", "думать", "место", "спросить", "через", "лицо", "тогда", "ведь", "хороший", "каждый", "новый", "жить", "должный", "смотреть", "почему", "потому", "сторона", "просто", "нога", "сидеть", "понять", "иметь", "конечный", "делать", "вдруг", "над", "взять", "никто", "сделать"];
+// Common English words
+export const commonWords: string[] = [
+  "and", "in", "not", "on", "I", "that", "that one", "to be", "with", "but", "all", "this", "how", "she", "by", "but",
+  "they", "to", "at", "you", "from", "we", "for", "you (plural)", "so", "also", "from", "say", "this one", "which",
+  "can", "person", "about", "one", "still", "would", "such", "only", "oneself", "one's own", "which", "when", "already",
+  "for", "here", "who", "yes", "speak", "year", "know", "my", "before", "or", "if", "time", "hand", "no", "most", "neither",
+  "become", "big", "even", "other", "our", "one's own", "under", "where", "matter", "there is", "self", "once", "in order to",
+  "two", "there", "than", "eye", "life", "first", "day", "here", "in", "nothing", "then", "very", "with", "want", "whether",
+  "at", "head", "must", "without", "see", "go", "now", "also", "stand", "friend", "house", "now", "possible", "after", "word",
+  "here", "think", "place", "ask", "through", "face", "then", "after all", "good", "each", "new", "live", "must", "look",
+  "why", "because", "side", "just", "leg", "sit", "understand", "have", "final", "do", "suddenly", "over", "take", "nobody", "make"
+];
 
-// Термины программирования на русском
-export const programmingWords: string[] = ["код", "функция", "переменная", "класс", "объект", "метод", "массив", "строка", "целое", "логический", "цикл", "условие", "возврат", "импорт", "экспорт", "модуль", "компонент", "пропсы", "состояние", "хук", "асинхронный", "ожидание", "обещание", "обратный вызов", "событие", "слушатель", "рендер", "компиляция", "отладка", "ошибка", "исключение", "попытка", "перехват", "завершение", "нуль", "неопределенный", "интерфейс", "тип", "обобщенный", "алгоритм", "данные", "структура", "стек", "очередь", "дерево", "граф", "рекурсия", "итерация", "область видимости", "замыкание", "прототип", "наследование", "полиморфизм", "инкапсуляция", "абстракция", "шаблон", "дизайн", "архитектура", "фреймворк", "библиотека", "зависимость", "пакет", "npm", "git", "коммит", "ветка", "слияние", "пулл", "пуш", "запрос", "проверка", "тест", "модульный", "интеграция", "развертывание", "сервер", "клиент", "апи", "рест", "графкл", "база данных", "запрос", "схема", "модель", "представление", "контроллер", "промежуточное ПО", "аутентификация", "авторизация", "безопасность", "производительность", "оптимизация", "отзывчивый", "мобильный", "настольный", "браузер", "дом", "виртуальный", "тень", "вебпак", "бабель", "тайпскрипт", "джаваскрипт", "реакт", "вью", "ангуляр", "нода", "экспресс", "монгодб", "скл", "носкл"];
+// Programming terms in English
+export const programmingWords: string[] = [
+  "code", "function", "variable", "class", "object", "method", "array", "string", "integer", "boolean", "loop", "condition",
+  "return", "import", "export", "module", "component", "props", "state", "hook", "asynchronous", "await", "promise",
+  "callback", "event", "listener", "render", "compilation", "debugging", "error", "exception", "try", "catch", "finally",
+  "null", "undefined", "interface", "type", "generic", "algorithm", "data", "structure", "stack", "queue", "tree", "graph",
+  "recursion", "iteration", "scope", "closure", "prototype", "inheritance", "polymorphism", "encapsulation", "abstraction",
+  "pattern", "design", "architecture", "framework", "library", "dependency", "package", "npm", "git", "commit", "branch",
+  "merge", "pull", "push", "request", "check", "test", "unit", "integration", "deployment", "server", "client", "api", "rest",
+  "graphql", "database", "query", "schema", "model", "view", "controller", "middleware", "authentication", "authorization",
+  "security", "performance", "optimization", "responsive", "mobile", "desktop", "browser", "dom", "virtual", "shadow",
+  "webpack", "babel", "typescript", "javascript", "react", "vue", "angular", "node", "express", "mongodb", "sql", "nosql"
+];
 
-// Научные термины на русском
-export const scienceWords: string[] = ["наука", "теория", "гипотеза", "эксперимент", "наблюдение", "данные", "анализ", "исследование", "метод", "доказательство", "заключение", "результат", "переменная", "контроль", "образец", "популяция", "статистика", "вероятность", "корреляция", "причинность", "физика", "химия", "биология", "астрономия", "геология", "экология", "эволюция", "генетика", "молекула", "атом", "элемент", "соединение", "реакция", "энергия", "сила", "движение", "гравитация", "квант", "относительность", "частица", "волна", "свет", "звук", "тепло", "температура", "давление", "объем", "масса", "вес", "плотность", "скорость", "ускорение", "импульс", "трение", "электричество", "магнетизм", "цепь", "ток", "напряжение", "сопротивление", "клетка", "ткань", "орган", "система", "организм", "вид", "экосистема", "биом", "климат", "погода", "атмосфера", "гидросфера", "литосфера", "плита", "тектоника", "землетрясение", "вулкан", "минерал", "порода", "ископаемое", "звезда", "планета", "галактика", "вселенная", "солнечный", "лунный", "космический", "радиация", "спектр", "длина волны", "частота", "ядро", "электрон", "протон", "нейтрон", "изотоп", "ион", "кислота", "основание", "раствор", "растворитель", "растворенное вещество", "концентрация", "фермент", "белок", "углевод", "липид", "нуклеиновый", "кислота", "днк", "рнк", "хромосома", "ген", "аллель", "фенотип", "генотип"];
+// Scientific terms in English
+export const scienceWords: string[] = [
+  "science", "theory", "hypothesis", "experiment", "observation", "data", "analysis", "research", "method", "evidence",
+  "conclusion", "result", "variable", "control", "sample", "population", "statistics", "probability", "correlation",
+  "causation", "physics", "chemistry", "biology", "astronomy", "geology", "ecology", "evolution", "genetics", "molecule",
+  "atom", "element", "compound", "reaction", "energy", "force", "motion", "gravity", "quantum", "relativity", "particle",
+  "wave", "light", "sound", "heat", "temperature", "pressure", "volume", "mass", "weight", "density", "speed", "acceleration",
+  "momentum", "friction", "electricity", "magnetism", "circuit", "current", "voltage", "resistance", "cell", "tissue",
+  "organ", "system", "organism", "species", "ecosystem", "biome", "climate", "weather", "atmosphere", "hydrosphere",
+  "lithosphere", "plate", "tectonics", "earthquake", "volcano", "mineral", "rock", "fossil", "star", "planet", "galaxy",
+  "universe", "solar", "lunar", "space", "radiation", "spectrum", "wavelength", "frequency", "nucleus", "electron", "proton",
+  "neutron", "isotope", "ion", "acid", "base", "solution", "solvent", "solute", "concentration", "enzyme", "protein",
+  "carbohydrate", "lipid", "nucleic", "acid", "dna", "rna", "chromosome", "gene", "allele", "phenotype", "genotype"
+];
 
 // Пользовательские слова по умолчанию (пустой массив)
 const defaultCustomWords: string[] = [];
@@ -75,10 +108,6 @@ export const getCurrentWordSet = () => {
  * @returns массив слов из текущего набора
  */
 export const getWordsFromCurrentSet = () => {
-  // Обновляем пользовательские слова, если выбран пользовательский набор
-  if (currentWordSet === 'custom') {
-    wordSets.custom = getCustomWords();
-  }
   localStorage.setItem('count', String(15));
   return wordSets[currentWordSet];
 };
@@ -92,5 +121,10 @@ export const initWordSet = () => {
   const savedWordSet = localStorage.getItem('wordSet');
   if (savedWordSet && wordSets[savedWordSet]) {
     currentWordSet = savedWordSet;
+    
+    // Обновляем пользовательские слова, если выбран пользовательский набор
+    if (currentWordSet === 'custom') {
+      wordSets.custom = getCustomWords();
+    }
   }
 };

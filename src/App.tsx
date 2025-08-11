@@ -27,23 +27,15 @@ type IData = {
  * Главный компонент приложения для тренировки печати
  */
 const App = () => {
-  // Текст, введенный пользователем
   const [userType, setUserType] = useState<string>('')
-  // Массив символов для печати
   const [words, setWords] = useState<string[]>([])
-  // Ссылка на поле ввода
   const input = useRef<HTMLInputElement>(null)
-  // Флаг, указывающий, идет ли сейчас печать
   const [isPlaying, setIsPlaying] = useState<boolean>(false)
-  // Время, прошедшее с начала печати
   const [playedTime, setPlayedTime] = useState<number>(0)
-  // Флаг, указывающий, находится ли поле ввода в фокусе
   const [isFocused, setIsFocused] = useState(false)
-  // Флаг, указывающий, показывать ли результаты
   const [results, setResult] = useState(false)
   // Данные результатов печати
   const [data, setData] = useState<IData>()
-  // Количество ошибок
   const [errorsCount, setErrorsCount] = useState<number>(0)
   // Тема приложения (темная/светлая)
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark')
@@ -177,6 +169,7 @@ const App = () => {
     setPlayedTime(0);
     setResult(false);
     setData(undefined);
+    setStartIndex(0);
     getAllWords();
   }
 
@@ -210,6 +203,10 @@ const App = () => {
       <div className={`${results ? 'hidden' : 'block'}`}>
         <StopWatch start={isPlaying} setPlayedTime={setPlayedTime} />
         <form className='game__wrap'>
+
+
+
+          {/*letters*/}
           <div className='text__wrap' onClick={() => input.current && input.current.focus()}>
             {visibleWords.length > 0 ? (
               visibleWords.map((word, i) => (
